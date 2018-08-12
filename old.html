@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>HearthSearch</title>
+
+<meta charset="utf-8">
+<meta name="title=" content="HearthSearch">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use HearthSearch to quickly find data on any card">
+<meta name="keywords" content="hearthstone, search, card">
+
+<link rel="icon" href="icon-sm.png" type="image/png">
+
+<meta name="theme-color" content="#333">
+<meta name="msapplication-navbutton-color" content="#333">
+<meta name="apple-mobile-web-app-status-bar-style" content="#333">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>  
+  
+<!-- 
+TODO
+make loader work
+
+ -->
+
+<style type="text/css">
+	* {
+		text-align: center !important;
+	}
+	body {
+		background-color: #333;
+		margin: 20px;
+		color: #fff;
+	}
+	.modal {
+		color: #333;
+	}
+	.hearth-card {
+		position:relative;
+		display: inline-block;
+		cursor: pointer;
+	}
+	.hearth-card:hover {
+		transform: scale(1.1);
+	}
+</style>
+
+
+</head>
+<body>
+
+
+<h1 class=""><img src="icon-lg.png" width="64px">HearthSearch
+<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#infoModal" title="about">
+  <i class="fas fa-question"></i> About
+</button>
+</h1>
+
+<div class="modal fade" id="infoModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-question"></i> About</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <b>Searching</b>
+        <p>Enter parts of a card's name, text, type, race, class, or rarity</p>
+        <p>Enter multiple terms seperated with spaces to only find matches to every term entered</p>
+        <p>Click on a card to read more about it</p>
+        <b>Sources</b>
+        <p>We get card data from <a href="https://hearthstonejson.com/" target="_blank">hearthstonejson.com</a>
+      	<p>When you click on a card, we open the corresponding <a href="https://hearthstone.gamepedia.com" target="_blank">hearthstone.gamepedia.com</a> page</p>
+      	<b>About</b>
+      	<p>V.1.0.0</p>
+      	<p>Made by <a href="https://justingolden21.github.io" target="_blank">Justin Golden</a></p>
+      	<p> Contact me at <a href="mailto:justingolden@rgbstudios.org" target="_blank"><i class="fas fa-envelope"></i> justingolden@rgbstudios.org</a></p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Mana
+		<br>
+	<label class="checkbox-inline"><input checked type="checkbox" value="">Even</label>
+	<label class="checkbox-inline"><input checked type="checkbox" value="">Odd</label>
+
+	<select class="form-control">
+		<option>=</option>
+		<option>&lt;</option>
+		<option>&gt;</option>
+	</select>
+	<input type="number" class="form-control input-sm">
+	</label>
+
+
+	
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Attack
+	<select class="form-control">
+		<option>=</option>
+		<option>&lt;</option>
+		<option>&gt;</option>
+	</select>
+	<input type="number" class="form-control input-sm">
+	</label>
+
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Health
+	<select class="form-control">
+		<option>=</option>
+		<option>&lt;</option>
+		<option>&gt;</option>
+	</select>
+	<input type="number" class="form-control input-sm">
+	</label>
+
+
+
+
+	
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Class
+	<select class="form-control">
+		<option>Druid</option>
+		<option>Hunter</option>
+		<option>Mage</option>
+		<option>Paladin</option>
+		<option>Priest</option>
+		<option>Rogue</option>
+		<option>Shaman</option>
+		<option>Warlock</option>
+		<option>Warrior</option>
+	</select>
+	</label>
+	
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Rarity
+	<select class="form-control">
+		<option>Basic</option>
+		<option>Common</option>
+		<option>Rare</option>
+		<option>Epic</option>
+		<option>Legendary</option>
+	</select>
+	</label>
+
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Type
+	<select class="form-control">
+		<option>Minion</option>
+		<option>Spell</option>
+		<option>Weapon</option>
+		<option>Hero</option>
+	</select>
+	</label>
+
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Race
+	<select class="form-control">
+		<option>Beast</option>
+		<option>Demon</option>
+		<option>Dragon</option>
+		<option>Elemental</option>
+		<option>Mech</option>
+		<option>Murloc</option>
+		<option>Pirate</option>
+		<option>Totem</option>
+	</select>
+	</label>
+
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Mechanics
+	<select multiple class="form-control">
+		<option>Taunt</option>
+		<option>Combo</option>
+		<option>Charge</option>
+		<option>Battlecry</option>
+		<option>Adapt</option>
+		<option>C'Thun</option>
+		<option>Inspire</option>
+		<option>Frozen</option>
+		<option>Echo</option>
+		<option>Counter</option>
+		<option>Divine Shield</option>
+		<option>Freeze</option>
+		<option>Deathrattle</option>
+		<option>Discover</option>
+		<option>Jade Golem</option>
+		<option>Immune</option>
+		<option>Secret</option>
+		<option>Poisonous</option>
+		<option>Lifesteal</option>
+		<option>Overload</option>
+		<option>Quest</option>
+		<option>Recruit</option>
+		<option>Rush</option>
+		<option>Silence</option>
+		<option>Spare Parts</option>
+		<option>Spell Damage</option>
+		<option>Start of Game</option>
+		<option>Stealth</option>
+		<option>Windfury</option>
+	</select>
+	</label>
+
+	<label class="checkbox-inline"><input type="checkbox" value="">
+		Set
+		<br>
+		<label class="checkbox-inline"><input checked type="checkbox" value="">Standard</label>
+		<label class="checkbox-inline"><input checked type="checkbox" value="">Wild</label>
+
+	<select class="form-control">
+		<option>Basic</option>
+		<option>Classic</option>
+		<option>Journey to Un'Goro</option>
+		<option>Knights of the Frozen Throne</option>
+		<option>Kobolds & Catacombs</option>
+		<option>The Witchwood</option>
+		<option>The Boomsday Project</option>
+		<option>Naxxramas</option>
+		<option>Goblins vs Gnomes</option>
+		<option>Blackrock Mountain</option>
+		<option>The Grand Tournament</option>
+		<option>League of Explorers</option>
+		<option>Whispers of the Old Gods</option>
+		<option>One Night in Karazhan</option>
+		<option>Mean Streets of Gadgetzan</option>
+		<option>Hall of Fame</option>
+	</select>
+	</label>
+
+<br>
+
+Text
+<input type="text" class="form-control">
+
+Name
+-->
+
+
+
+
+<!-- <button class="btn btn-danger btn-lg">Reset</button> -->
+
+
+<div class="input-group">
+
+  <input autofocus id="input" type="text" class="form-control" placeholder="Search for a card..." aria-label="Search term" aria-describedby="basic-addon" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <div class="input-group-append">
+    <button id="button" type="button" class="btn btn-primary btn-lg"><i class="fas fa-search"></i></button>
+  </div>
+</div>
+
+<p id="loader"><i class="fas fa-spinner fa-spin"></i></p>
+<p id="output"></p>
+
+<script>
+
+let cardData;
+let input = document.getElementById("input");
+let output = document.getElementById("output");
+let button = document.getElementById("button");
+let loader = document.getElementById("loader");
+
+$.getJSON('https://api.hearthstonejson.com/v1/25770/enUS/cards.collectible.json', function(data) {
+	cardData = data;
+	// console.log(data);
+});
+
+loader.style.display = "none";
+
+input.onchange = function() {
+	loader.style.display = "inline";
+	let resultsFound = 0;
+	// output.innerHTML = "not found";
+	output.innerHTML = "";
+	for(key in cardData) {
+		let inputWords = input.value.toLowerCase().split(" ");
+		let searchKeys = "name text type race rarity cardClass".split(" ");
+
+		let validMatch = true;
+
+		for(inputWord in inputWords) {
+			let wordFound = false;
+			for(searchKey in searchKeys) {
+				// console.log(searchKeys[searchKey]);
+				// console.log(cardData[key][searchKeys[searchKey]]);
+				if(cardData[key][searchKeys[searchKey]] && cardData[key][searchKeys[searchKey]].toLowerCase().indexOf(inputWords[inputWord]) != -1) {
+					wordFound = true;
+					break;
+				}
+			}
+			if(!wordFound) {
+				validMatch = false;
+			}
+		}
+
+		// let matches = cardData[key].name && cardData[key].name.toLowerCase().indexOf(input.value.toLowerCase() ) != -1
+		// || cardData[key].text && cardData[key].text.toLowerCase().indexOf(input.value.toLowerCase() ) != -1
+		// || cardData[key].type && cardData[key].type.toLowerCase().indexOf(input.value.toLowerCase() ) != -1
+		// || cardData[key].race && cardData[key].race.toLowerCase().indexOf(input.value.toLowerCase() ) != -1
+		// || cardData[key].rarity && cardData[key].rarity.toLowerCase().indexOf(input.value.toLowerCase() ) != -1
+		// || cardData[key].class && cardData[key].class.toLowerCase().indexOf(input.value.toLowerCase() ) != -1;
+
+		if(validMatch) {
+			// output.innerHTML = "";
+			// for(item in cardData[key]) {
+			// 	output.innerHTML += item + ": " + cardData[key][item] + "<br>";
+			// }
+			// console.log(key);
+			resultsFound++;
+			output.innerHTML += "<img class='hearth-card' src='https://art.hearthstonejson.com/v1/render/latest/enUS/256x/" + cardData[key].id + ".png' onclick='window.open(\"https://hearthstone.gamepedia.com/" + cardData[key].name.replace("'","%27").replace(" ", "_") + "\", \"_blank\");' title=\"" + cardData[key].name + "\">"; //using escape for quote instead of single quote because some cards have apostrophies in name
+			// break;
+		}
+	}
+	// console.log(resultsFound);
+	output.innerHTML = resultsFound + " results found<br>" + output.innerHTML;
+	loader.style.display = "none";
+}
+
+</script>
+</body>
+</html>

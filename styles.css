@@ -1,0 +1,29 @@
+* {
+	text-align: center !important;
+}
+body {
+	background-color: #333;
+	margin: 20px;
+	color: #fff;
+}
+.modal {
+	color: #333;
+}
+.hearth-card {
+	position:relative;
+	display: inline-block;
+	cursor: pointer;
+}
+.hearth-card:hover {
+	transform: scale(1.1);
+}
+
+::-moz-selection {
+  background: #ccc;
+}
+::selection {
+  background: #ccc;
+}
+img {
+
+}
