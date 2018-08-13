@@ -77,3 +77,5 @@ function getRandom() {
 	input.value = card.name;
 	output.innerHTML = formatCardData(card); 
 }
+
+console.log("%c%s","color: #fff; background: #666; text-shadow:4px 4px 4px #333; font-size: 48px;"," HOWDY, I SEE YOU'RE LOOKING AT OUR CODE💻");
