@@ -1,49 +1,47 @@
-let cardData;
-let search = document.getElementById("search");
-let input = document.getElementById("input");
-let output = document.getElementById("output");
-let displaySelect = document.getElementById("displaySelect");
-let langSelect = document.getElementById("langSelect");
+let cardData, search, input, output, displaySelect, langSelect;
+
+window.onload = function() {
+	search = document.getElementById("search");
+	input = document.getElementById("input");
+	output = document.getElementById("output");
+	displaySelect = document.getElementById("displaySelect");
+	langSelect = document.getElementById("langSelect");
+
+	search.onclick = input.onchange = function() {
+		let resultsFound = 0;
+		output.innerHTML = "";
+		let inputWords = input.value.toLowerCase().split(" ");
+		let searchKeys = "name text type race rarity cardClass".split(" ");
+
+		for(key in cardData) {
+			let validMatch = true;
+			for(inputWord in inputWords) {
+				let wordFound = false;
+				for(searchKey in searchKeys) {
+					if(cardData[key][searchKeys[searchKey]] && cardData[key][searchKeys[searchKey]].toLowerCase().indexOf(inputWords[inputWord]) != -1) {
+						wordFound = true;
+						break;
+					}
+				}
+				if(!wordFound) {
+					validMatch = false;
+				}
+			}
+			if(validMatch) {
+				resultsFound++;
+				output.innerHTML += formatCardData(cardData[key]);		
+			}
+		}
+		output.innerHTML = resultsFound + " result" + (resultsFound==1?"":"s") + " found<br>" + output.innerHTML;
+	}
+}
+
 
 $.getJSON('https://api.hearthstonejson.com/v1/25770/enUS/cards.collectible.json', function(data) {
 	cardData = data;
 });
 
-
-search.onclick = input.onchange = function() {
-	let resultsFound = 0;
-	output.innerHTML = "";
-
-	let inputWords = input.value.toLowerCase().split(" ");
-	let searchKeys = "name text type race rarity cardClass".split(" ");
-
-	for(key in cardData) {
-		let validMatch = true;
-
-		for(inputWord in inputWords) {
-			let wordFound = false;
-			for(searchKey in searchKeys) {
-				if(cardData[key][searchKeys[searchKey]] && cardData[key][searchKeys[searchKey]].toLowerCase().indexOf(inputWords[inputWord]) != -1) {
-					wordFound = true;
-					break;
-				}
-			}
-			if(!wordFound) {
-				validMatch = false;
-			}
-		}
-
-		if(validMatch) {
-			resultsFound++;
-			
-			output.innerHTML += formatCardData(cardData[key]);		
-		}
-	}
-	output.innerHTML = resultsFound + " result" + (resultsFound==1?"":"s") + " found<br>" + output.innerHTML;
-}
-
 //"deDE enGB enUS esES esMX frFR itIT jaJP koKR plPL ptBR ptPT ruRU thTH zhCN zhTW"
-
 function formatCardData(data) {
 	if(displaySelect.value == "text") {
 		let str = "<hr>";
@@ -77,6 +75,5 @@ function formatCardData(data) {
 function getRandom() {
 	let card = cardData[Math.floor(Math.random()*cardData.length)];
 	input.value = card.name;
-	//below copied from input function
 	output.innerHTML = formatCardData(card); 
 }
