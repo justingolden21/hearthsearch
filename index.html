@@ -18,37 +18,40 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#333">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>  
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- MAYBE TODO
-add loader
-select language option
-display larger cards option
-random card option
+<!-- TODO
+loader
  -->
 
 </head>
 <body>
 
-<h1 class=""><img src="icon-lg.png" width="64px">HearthSearch
-<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#infoModal" title="about">
+<h1 class=""><img src="icon-lg.png" width="64px">HearthSearch</h1>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#infoModal" title="about">
  <i class="fas fa-question"></i> About
 </button>
-<button type="button" class="btn btn-default btn-lg" title="refresh" onclick="location.reload();">
- <i class="fas fa-sync-alt"></i> Refresh
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#settingsModal" title="settings">
+ <i class="fas fa-cog"></i> Settings
 </button>
-</h1>
+<button type="button" class="btn btn-default btn-lg" title="random card" onclick="getRandom();">
+ <i class="fas fa-dice"></i> Random
+</button>
+<button type="button" class="btn btn-default btn-lg" title="refresh" onclick="location.reload();">
+  <i class="fas fa-sync-alt"></i> Refresh
+</button>
+<br><br>
 
 <div class="modal fade" id="infoModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"><i class="fas fa-question"></i> About</h4>
+        <h4 class="modal-title text-info"><i class="fas fa-question"></i> About</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -60,9 +63,55 @@ random card option
         <p>We get card data from <a href="https://hearthstonejson.com/" target="_blank">hearthstonejson.com</a>
       	<p>When you click on a card, we open the corresponding <a href="https://hearthstone.gamepedia.com" target="_blank">hearthstone.gamepedia.com</a> page</p>
       	<b>About</b>
-      	<p>V.1.0.0</p>
+      	<p>V.1.1.0</p>
       	<p>Made by <a href="https://justingolden21.github.io" target="_blank">Justin Golden</a></p>
       	<p> Contact me at <a href="mailto:justingolden@rgbstudios.org" target="_blank"><i class="fas fa-envelope"></i> justingolden@rgbstudios.org</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="settingsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-info"><i class="fas fa-cog"></i> Settings</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="form-group">
+          <label for="sel1">Display results:</label>
+          <select id="displaySelect" class="form-control" id="sel1">
+            <option value="text">as text</option>
+            <option value="small" selected>as small images</option>
+            <option value="large">as large images</option>
+          </select>
+        </div>
+
+        <!-- "deDE enGB enUS esES esMX frFR itIT jaJP koKR plPL ptBR ptPT ruRU thTH zhCN zhTW" -->
+        <div class="form-group">
+          <label for="sel1">Display images in:</label>
+          <select id="langSelect" class="form-control" id="sel1">
+            <option value="deDE">German</option>
+            <!-- <option value="enGB">British English</option> -->
+            <option value="enUS" selected="">American English</option>
+            <option value="esES">Spanish</option>
+            <option value="esMX">Mexican Spanish</option>
+            <option value="frFR">French</option>
+            <option value="itIT">Italian</option>
+            <option value="jaJP">Japanese</option>
+            <option value="koKR">Korean</option>
+            <option value="plPL">Polish</option>
+            <option value="ptBR">Brazilian Portuguese</option>
+            <!-- <option value="ptPT">Portuguese</option> -->
+            <option value="ruRU">Russian</option>
+            <option value="thTH">Thai</option>
+            <option value="zhCN">Chinese Simplified</option>
+            <option value="zhTW">Chinese Traditional, Taiwan</option>
+          </select>
+        </div>
+
       </div>
     </div>
   </div>
@@ -71,7 +120,7 @@ random card option
 <div class="input-group">
   <input autofocus id="input" type="text" class="form-control" placeholder="Search for a card..." aria-label="Search term" aria-describedby="basic-addon" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <div class="input-group-append">
-    <button type="button" class="btn btn-primary btn-lg"><i class="fas fa-search"></i></button>
+    <button id="search" type="button" class="btn btn-primary btn-lg"><i class="fas fa-search"></i></button>
   </div>
 </div>
 

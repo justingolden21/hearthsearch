@@ -17,13 +17,17 @@ body {
 .hearth-card:hover {
 	transform: scale(1.1);
 }
-
 ::-moz-selection {
   background: #ccc;
 }
 ::selection {
   background: #ccc;
 }
-img {
-
+hr {
+	background-color: #999;
+} a {
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline !important;
 }
