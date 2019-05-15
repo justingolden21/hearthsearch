@@ -36,8 +36,7 @@ window.onload = function() {
 	}
 }
 
-
-$.getJSON('https://api.hearthstonejson.com/v1/25770/enUS/cards.collectible.json', function(data) {
+$.getJSON('https://api.hearthstonejson.com/v1/30795/enUS/cards.collectible.json', function(data) {
 	cardData = data;
 });
 
