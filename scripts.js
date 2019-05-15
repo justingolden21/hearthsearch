@@ -1,4 +1,4 @@
-let cardData, search, input, output, displaySelect, langSelect;
+let cardData, search, input, output, displaySelect, langSelect, flavorCheckbox;
 
 window.onload = function() {
 	search = document.getElementById("search");
@@ -6,6 +6,7 @@ window.onload = function() {
 	output = document.getElementById("output");
 	displaySelect = document.getElementById("displaySelect");
 	langSelect = document.getElementById("langSelect");
+	flavorCheckbox = document.getElementById("flavorCheckbox");
 
 	search.onclick = input.onchange = function() {
 		let resultsFound = 0;
@@ -60,7 +61,6 @@ function formatCardData(data) {
 			"<br>Text: " + data.text +
 			"<br>Flavor: " + data.flavor;
 		return str;
-		// return data.name + "<br>"; //TODO: improve formating and styling. show more info.
 	}
 	//using escape for quote instead of single quote because some cards have apostrophies in name
 	return "<img class='hearth-card' src='https://art.hearthstonejson.com/v1/render/latest/" +
@@ -68,7 +68,8 @@ function formatCardData(data) {
 		(displaySelect.value=="small"?"256":"512") + "x/" + data.id + 
 		".png' onclick='window.open(\"https://hearthstone.gamepedia.com/" + 
 		data.name.replace("'","%27").replace(" ", "_") + "\", \"_blank\");' title=\"" + 
-		data.name + "\">";
+		data.name + "\">" +
+		(flavorCheckbox.checked ? "<p>" + data.flavor + "</p>" : "");
 }
 
 function getRandom() {
