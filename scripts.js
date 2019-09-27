@@ -69,7 +69,7 @@ function formatCardData(data) {
 		".png' onclick='window.open(\"https://hearthstone.gamepedia.com/" + 
 		data.name.replace("'","%27").replace(" ", "_") + "\", \"_blank\");' title=\"" + 
 		data.name + "\">" +
-		(flavorCheckbox.checked ? "<p>" + data.flavor + "</p>" : "");
+		(flavorCheckbox.checked && data.flavor ? "<p>" + data.flavor + "</p>" : "");
 }
 
 function getRandom() {
